@@ -8,9 +8,9 @@ Capistrano::Configuration.class_eval do
     shell       = fetch(:user_shell,  :default_shell)
 
     if options[:key]
-      run "#{ssh_forward} && #{user_sudo} #{shell} -c '#{cmd}'"
+      run "#{ssh_forward} && #{user_sudo} #{shell} -c '#{cmd.gsub('\n', '')}'", options
     else
-      run "#{user_sudo} #{shell} -c '#{cmd}'"
+      run "#{user_sudo} #{shell} -c '#{cmd}'", options
     end
   end
 end
