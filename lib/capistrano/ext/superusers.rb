@@ -4,7 +4,7 @@ Capistrano::Configuration.class_eval do
     owner       = fetch(:owner,       'nobody')
 
     user_sudo   = fetch(:user_sudo,   "sudo -u #{owner} -i")
-    ssh_forward = fetch(:ssh_forward, "setfacl -m #{owner}:rx $(dirname $SSH_AUTH_SOCK) && setfacl -m #{owner}:rwx $SSH_AUTH_SOCK")
+    ssh_forward = fetch(:ssh_forward, "setfacl -m #{owner}:rwx $(dirname $SSH_AUTH_SOCK) && setfacl -m #{owner}:rwx $SSH_AUTH_SOCK")
     shell       = fetch(:user_shell,  :default_shell)
     
     cmd.gsub! "\n", ""
