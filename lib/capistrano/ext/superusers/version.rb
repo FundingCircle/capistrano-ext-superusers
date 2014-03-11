@@ -3,8 +3,8 @@ module Capistrano
     module Superusers
       module Version
         MAJOR = 0
-        MINOR = 1
-        TINY = 0xf
+        MINOR = 2
+        TINY = 0
         STRING= [MAJOR, MINOR, TINY].join('.')
       end
     end
