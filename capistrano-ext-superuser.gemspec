@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Capistrano extension to run sensible userage'
   spec.license = 'Simplified BSD'
 
-  spec.add_dependency 'capistrano', '>=2.11.0'
+  spec.add_dependency 'capistrano', '~>2.11.0'
   spec.add_dependency 'capistrano-ext'
 
   spec.add_development_dependency 'rspec'
