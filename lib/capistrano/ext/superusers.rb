@@ -9,6 +9,8 @@ Capistrano::Configuration.class_eval do
     
     cmd.gsub! "\n", ""
 
-    run "#{ssh_forward} && #{user_sudo} #{shell} -c '#{cmd}'", options
+    result = run("#{ssh_forward} && #{user_sudo} #{shell} -c '#{cmd}'", options)
+    puts result.inspect
+    result
   end
 end
