@@ -11,12 +11,12 @@ Gem::Specification.new do |spec|
   spec.summary = 'Extend out from capistrano deploy user stuff and bits'
   spec.description = 'Capistrano extension to run sensible userage'
   spec.license = 'Simplified BSD'
+  spec.files = `git ls-files -z`.split("\x0")
+  spec.require_paths = ['lib']
 
   spec.add_dependency 'capistrano', '>=2.11.0'
   spec.add_dependency 'capistrano-ext'
 
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'capistrano-spec'
-
-  spec.require_path = 'lib'
 end
