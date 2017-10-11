@@ -1,4 +1,8 @@
-require 'capistrano/all'
+begin
+  require 'capistrano/all'
+rescue LoadError
+  require 'capistrano'
+end
 
 Capistrano::Configuration.class_eval do
   def superuser(cmd, options={})
