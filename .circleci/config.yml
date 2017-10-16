@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ruby:alpine
+    steps:
+      - checkout
+      - run: apk add --no-cache --no-progress git
+      - run: gem list --installed bundler || gem install bundler
+      - restore_cache:
+          key: capistrano-ext-superusers-{{ checksum "capistrano-ext-superusers.gemspec" }}
+      - run: bundle check --path=vendor/bundle || bundle install --jobs=3 --path=vendor/bundle --retry=3
+      - save_cache:
+          key: capistrano-ext-superusers-{{ checksum "capistrano-ext-superusers.gemspec" }}
+          paths:
+            - vendor/bundle
+      - run: bundle exec rspec spec --format progress
+    working_directory: ~/capistrano-ext-superusers
