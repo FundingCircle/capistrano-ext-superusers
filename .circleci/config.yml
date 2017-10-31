@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ruby:alpine
+    steps:
+      - checkout
+      - run: apk add --no-cache --no-progress git
+      - run: gem list --installed bundler || gem install bundler
+      - restore_cache:
+          key: capistrano-ext-superusers-{{ checksum "capistrano-ext-superusers.gemspec" }}
+      - run: bundle check --path=vendor/bundle || bundle install --jobs=3 --path=vendor/bundle --retry=3
+      - save_cache:
+          key: capistrano-ext-superusers-{{ checksum "capistrano-ext-superusers.gemspec" }}
+          paths:
+            - vendor/bundle
+      - run: bundle exec rspec spec --format progress
+      - deploy:
+          name: Build gem and push to RubyGems
+          command: |
+            if [ ! -z "$CIRCLE_TAG" ]; then
+              gem build $CIRCLE_PROJECT_REPONAME.gemspec
+              echo ":rubygems_api_key: $RUBYGEMS_API_KEY" >  ~/.gem/credentials
+              chmod 0600 ~/.gem/credentials
+              gem push $CIRCLE_PROJECT_REPONAME-$(echo "$CIRCLE_TAG" | sed -e 's/v//').gem
+            fi
+    working_directory: ~/capistrano-ext-superusers
